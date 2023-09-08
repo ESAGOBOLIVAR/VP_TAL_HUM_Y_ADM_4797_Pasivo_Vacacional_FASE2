@@ -14,7 +14,7 @@ function parametrosGlobales() {
     //nombre de las tablas utilizar
     nameTables: {
       tablaPlantillas: "Plantillas",
-      tablaBasesConFIltrosAplicados: "Bases Con FIltros Aplicados",
+      tablaBasesConFiltrosAplicados: "Bases Con Filtros Aplicados",
       tablaBasesSinAplicarFiltros: "Bases Sin Aplicar Filtros"
 
     },

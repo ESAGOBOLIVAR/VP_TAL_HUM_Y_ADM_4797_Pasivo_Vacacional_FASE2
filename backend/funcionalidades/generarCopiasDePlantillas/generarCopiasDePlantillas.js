@@ -4,11 +4,11 @@ function generarCopiasDePlantillas() {
     let { idDataBase, idCarpetas, nameTables } = parametrosGlobales();
     let { idBaseDeDatosPasivoVacacional } = idDataBase;
     let { idCarpetaPlantillas, idCarpetaPlantillaGoogleSheetsGeneradas } = idCarpetas;
-    let { tablaPlantillas, tablaBasesConFIltrosAplicados } = nameTables;
+    let { tablaPlantillas, tablaBasesConFiltrosAplicados } = nameTables;
 
 
     //obtener la hoja de calculo de la base de datos con los filtros aplicados
-    const [sheetHojaBaseConFiltrosAplicados] = asignarNombreHojaDeCalculo(tablaBasesConFIltrosAplicados, idBaseDeDatosPasivoVacacional);
+    const [sheetHojaBaseConFiltrosAplicados] = asignarNombreHojaDeCalculo(tablaBasesConFiltrosAplicados, idBaseDeDatosPasivoVacacional);
 
     let dataTablaPlantilla = readAllArray([tablaPlantillas, idBaseDeDatosPasivoVacacional]);
 
