@@ -4,7 +4,7 @@ function funcionalidadGenerarMetricaObtenerDatosFiltrados() {
     //desestructuracion para obtener parametros globales
     let { idDataBase, nameTables } = parametrosGlobales();
     let { idBaseDeDatosPasivoVacacional } = idDataBase;
-    let { tablaPlantillas, tablaBasesConFiltrosAplicados, tablaBasesSinAplicarFiltros } = nameTables;
+    let { tablaBasesConFiltrosAplicados, tablaBasesSinAplicarFiltros } = nameTables;
 
     //se obtiene la data de la base sin aplicar filtros
     let dataTablaBasesSinAplicarFiltros = readAllArray([tablaBasesSinAplicarFiltros, idBaseDeDatosPasivoVacacional]);
@@ -50,7 +50,6 @@ function funcionalidadGenerarMetricaObtenerDatosFiltrados() {
             //@param {String} url:es la url de la base da datos a insertar multiples registros
             //@param {Array of Array} datos: es el arreglo de los datos a insertar en la hoja de calculo
             insertMultipleByUrl(urlBaseConFiltrosAplicados, filtro);
-
 
         }
     }
