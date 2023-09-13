@@ -30,30 +30,32 @@ function funcionalidadGenerarReporte10ObtenerDatosFiltrados() {
 
         */
 
-        let tipoContrato = "";
-        //  let tipo1 = "término fijo".trim().toUpperCase();
-        //  let tipo2 = "Termino Indefinido".trim().toUpperCase();
-        //  let companiaOmitir = "cultivarte".trim().toUpperCase();
-
-        //  let filtro = data.filter(el => (el[0].toString().trim().toUpperCase() != companiaOmitir && (el[0].toString().trim().toUpperCase() == tipo1 || tipo2)))
+        let tipoContrato1 = "TERMINO FIJO".trim().toUpperCase();;
+        let tipoContrato2 = "TERMINO INDEFINIDO".trim().toUpperCase();;
+        let filtro = data.filter(el => (el[4].toString().trim().toUpperCase() == tipoContrato1 || el[4].toString().trim().toUpperCase() == tipoContrato2));
 
 
 
         //  //si la  data esta completa entonces insertar en la base que se creo anteriormente
-        //  if (filtro.length > 0) {
-        //      console.log("DATA FILTRO")
-        //      console.log(filtro);
-        //      console.log("INSERTAR");
-        //      let urlBaseConFiltrosAplicados = dataTablaBasesConFiltrosAplicados[0][1];
+        if (filtro.length > 0) {
+            console.log("DATA FILTRO")
+            console.log(filtro);
+            console.log("INSERTAR");
+            let urlBaseConFiltrosAplicados = dataTablaBasesConFiltrosAplicados[1][1];
 
-        //      console.log("url base con los filtros aplicados");
-        //      console.log(urlBaseConFiltrosAplicados);
+            filtro.map(el => {
+                let registro=el;
+                let saldo = parseInt(el[8]);
+                registro[8]=saldo;
+            });
 
-        //      //funcion para insertar los multiples registros en base a la url
-        //      //@param {String} url:es la url de la base da datos a insertar multiples registros
-        //      //@param {Array of Array} datos: es el arreglo de los datos a insertar en la hoja de calculo
-        //      insertMultipleByUrl(urlBaseConFiltrosAplicados, filtro);
-        //  }
+            console.log("FILTRO LIMPIO");
+            console.log(filtro);
+            //      //funcion para insertar los multiples registros en base a la url
+            //      //@param {String} url:es la url de la base da datos a insertar multiples registros
+            //      //@param {Array of Array} datos: es el arreglo de los datos a insertar en la hoja de calculo
+            insertMultipleByUrl(urlBaseConFiltrosAplicados, filtro);
+        }
 
 
     }
