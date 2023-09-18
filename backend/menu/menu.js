@@ -1,7 +1,7 @@
 function onOpen() {
     var ui = SpreadsheetApp.getUi();
     // Crea un menú en la hoja de cálculo
-    ui.createMenu('Mi Menú Personalizado')
+    ui.createMenu('Menú Funcionalidades')
         .addItem('Generar Plantillas', 'generarCopiasDePlantillas')
         .addItem('Generar Metrica, Reporte 10 y Reporte 8 Filtrados', 'obtenerDatosFiltradosMetricaReporte10YReporte8')
         .addItem("Encontrar registros repetidos", 'encontrarRegistrosRepetidos')
@@ -10,8 +10,12 @@ function onOpen() {
         .addItem("Cruzar Metrica Con Reporte 10", 'menuCruzarMetricaReporte10')
         .addItem("Generacion Hacia Historico", 'generacionDeHistorico')
         .addToUi();
-}
 
+    //menu 2 para enviar reporte
+    ui.createMenu('Menú Envios de Reporte')
+        .addItem('Enviar Reporte', 'menuEnviarReporte')
+        .addToUi();
+}
 
 //funcion para filtrar los datos de metrica el reporte 10 y reporte 8
 function obtenerDatosFiltradosMetricaReporte10YReporte8() {
@@ -56,6 +60,12 @@ function generacionDeHistorico() {
     SpreadsheetApp.getUi().alert(`Se ha generado la migracion del reporte final al historico`);
 }
 
+
+function menuEnviarReporte() {
+    enviarReporte();
+    SpreadsheetApp.getUi().alert(`Se han enviado los reportes marcados en la Vicepresidencia`);
+
+}
 
 
 

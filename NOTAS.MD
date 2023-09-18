@@ -21,3 +21,5 @@
 # funcionalidad 7 cruzarMetricaConReporte10
 
 # funcionalidad 8 generarHistorico
+
+# funcionalidad enviarReporte

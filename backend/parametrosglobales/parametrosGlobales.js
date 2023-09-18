@@ -20,7 +20,8 @@ function parametrosGlobales() {
       tablaPipolParther: "Pipol Parther",
       tablaBissnetPartner: "Bissnet Partner",
       tablaRango: "Rango",
-      tablaJefe: "Jefe"
+      tablaJefe: "Jefe",
+      tablaVicepresidencia:"Vicepresidencia"
 
     },
     //nombre de los campos a actualizar

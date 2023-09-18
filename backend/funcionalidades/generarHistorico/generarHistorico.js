@@ -3,7 +3,7 @@ function generarHistorico() {
     //desestructuracion para obtener parametros globales
     let { idDataBase, nameTables } = parametrosGlobales();
     let { idBaseDeDatosPasivoVacacional } = idDataBase;
-    let { tablaBasesConFiltrosAplicados, tablaPipolParther, tablaBissnetPartner, tablaRango, tablaParametrizacion, tablaJefe } = nameTables;
+    let { tablaParametrizacion, tablaJefe } = nameTables;
 
 
     const [sheetHojaTablaParametrizacion] = asignarNombreHojaDeCalculo(tablaParametrizacion, idBaseDeDatosPasivoVacacional);
