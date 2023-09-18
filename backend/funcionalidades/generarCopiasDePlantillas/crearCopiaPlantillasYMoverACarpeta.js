@@ -1,5 +1,6 @@
 //@param {String} urlPlantilla: es la url de la plantilla
-function crearCopiaPlantillasYMoverACarpeta(urlPlantilla) {
+//@param {String} idCarpetaPlantillaGoogleSheetsGeneradas: es el id de la carpeta donde van a estar las plantillas
+function crearCopiaPlantillasYMoverACarpeta(urlPlantilla, idCarpetaPlantillaGoogleSheetsGeneradas) {
 
     // Obtén la hoja de cálculo activa
     let hojaActiva = SpreadsheetApp.openByUrl(urlPlantilla);
@@ -7,7 +8,7 @@ function crearCopiaPlantillasYMoverACarpeta(urlPlantilla) {
     let idHoja = hojaActiva.getId();
 
     // Obtén la carpeta de destino por su ID (reemplaza 'ID_DE_LA_CARPETA' con la ID de tu carpeta)
-    let carpetaDestino = DriveApp.getFolderById('1JUASU8-9Wz0fCjTrOd62cOJA5g3lJ1k7');
+    let carpetaDestino = DriveApp.getFolderById(idCarpetaPlantillaGoogleSheetsGeneradas);
 
     // Crea una copia de la hoja de cálculo
     let copiaHoja = DriveApp.getFileById(idHoja).makeCopy();

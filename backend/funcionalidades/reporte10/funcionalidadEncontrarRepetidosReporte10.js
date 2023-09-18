@@ -11,11 +11,11 @@ function funcionalidadEncontrarRepetidosReporte10() {
     dataTablaBasesConFiltrosAplicados = JSON.parse(dataTablaBasesConFiltrosAplicados);
 
     //url de hoja metrica
-    let urlSheetMetricaFiltrada = dataTablaBasesConFiltrosAplicados[1][1];
+    let urlSheetReporte10Filtrado = dataTablaBasesConFiltrosAplicados[1][1];
 
-    if (urlSheetMetricaFiltrada) {
+    if (urlSheetReporte10Filtrado) {
 
-        let datosTabla = readAllByUrl(urlSheetMetricaFiltrada);
+        let datosTabla = readAllByUrl(urlSheetReporte10Filtrado);
 
         console.log("DATOS DE LA TABLA");
         console.log(datosTabla);
@@ -41,7 +41,7 @@ function funcionalidadEncontrarRepetidosReporte10() {
         if (arrayFilasRegistrosRepetidos.length > 0) {
 
             // Obténer la hoja de cálculo activa
-            let hojaActiva = SpreadsheetApp.openByUrl(urlSheetMetricaFiltrada);
+            let hojaActiva = SpreadsheetApp.openByUrl(urlSheetReporte10Filtrado);
 
             const dataArreglo = new Set(arrayFilasRegistrosRepetidos);
 

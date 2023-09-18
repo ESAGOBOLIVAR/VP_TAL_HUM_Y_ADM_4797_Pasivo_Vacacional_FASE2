@@ -11,15 +11,15 @@ function funcionalidadRevisarFechaBalance() {
     dataTablaBasesConFiltrosAplicados = JSON.parse(dataTablaBasesConFiltrosAplicados);
 
     //url de hoja metrica
-    let urlSheetMetricaFiltrada = dataTablaBasesConFiltrosAplicados[1][1];
+    let urlSheetReporte10Filtrado = dataTablaBasesConFiltrosAplicados[1][1];
 
-    if (urlSheetMetricaFiltrada) {
+    if (urlSheetReporte10Filtrado) {
         // abrir la hoja por Url
-        let BD = SpreadsheetApp.openByUrl(urlSheetMetricaFiltrada);
+        let BD = SpreadsheetApp.openByUrl(urlSheetReporte10Filtrado);
         //acceder a la hoja activa
         const sheetHoja = BD.getActiveSheet();
 
-        let datosTabla = readAllByUrl(urlSheetMetricaFiltrada);
+        let datosTabla = readAllByUrl(urlSheetReporte10Filtrado);
 
         // let arrayFilasRegistrosRepetidos = [];
         //iterar registro por registro para encontrar repetidos y almacenar las posiciones

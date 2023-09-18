@@ -15,7 +15,12 @@ function parametrosGlobales() {
     nameTables: {
       tablaPlantillas: "Plantillas",
       tablaBasesConFiltrosAplicados: "Bases Con Filtros Aplicados",
-      tablaBasesSinAplicarFiltros: "Bases Sin Aplicar Filtros"
+      tablaBasesSinAplicarFiltros: "Bases Sin Aplicar Filtros",
+      tablaParametrizacion: "Parametrizacion",
+      tablaPipolParther: "Pipol Parther",
+      tablaBissnetPartner: "Bissnet Partner",
+      tablaRango: "Rango",
+      tablaJefe: "Jefe"
 
     },
     //nombre de los campos a actualizar
