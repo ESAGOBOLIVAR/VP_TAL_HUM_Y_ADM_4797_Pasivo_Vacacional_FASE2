@@ -83,7 +83,14 @@ function cruzarMetricaConReporte10() {
 
             //en base al nombre del jefe inmediato proceder a buscar en la metrica no limpia para obtener el cargo de este
 
-            let cargoJefe = obtenerCargoJefe(nombreJefeInmediato, dataTablaMetricaSinAplicarFiltros)
+            let cargoJefe = obtenerCargoJefe(nombreJefeInmediato, dataTablaMetricaSinAplicarFiltros);
+
+            //buscar el id en el reporte 8 de los datos del antes para obtener total dias disfrutados
+
+            //buscar el id en el reporte 8 de los datos del antes para obtener total dias pendientes
+
+
+
             let arregloRegistro = [idMetrica, nombre, cargoFuncionario, nombreJefeInmediato, cargoJefe, correoCorporativoJefe, gerencia, vicepresidencia, pipolParther, bissnetPartner, diasPendientesPorDisfrutar, , , , rango, meta, pendientesMeta];
 
             console.log("--------REGISTRO-------------");
@@ -124,19 +131,8 @@ function cruzarMetricaConReporte10() {
 function consultarPipolPartherYBissnetPartner(vicepresidencia, dataTablaPipolParther, dataTablaBissnetPartner) {
 
     let vicepresidenciaBuscar = vicepresidencia.toString().trim().toUpperCase();
-
-    // console.log("VICEPRESIDENCIA RECIBIDA");
-    // console.log(vicepresidenciaBuscar);
-
-    // console.log("TABLA PIPOL PARTHER");
-    // console.log(dataTablaPipolParther);
-
     let pipolParther = dataTablaPipolParther.find(el => el[0].toString().trim().toUpperCase() == vicepresidenciaBuscar);
     let bissnetParther = dataTablaBissnetPartner.find(el => el[0].toString().trim().toUpperCase() == vicepresidenciaBuscar);
-
-    // console.log("BUSQUEDA");
-    // console.log(pipolParther)
-
 
     pipolParther = pipolParther ? pipolParther[1] : "Sin datos";
     bissnetParther = bissnetParther ? bissnetParther[1] : "Sin datos";
@@ -154,16 +150,12 @@ function consultarPipolPartherYBissnetPartner(vicepresidencia, dataTablaPipolPar
 function obtenerRango(diasPendientesPorDisfrutar, dataTablaRango) {
     //buscar en la tabla rango donde los dias pendientes por disfrutar sean menor o igual al valor a recibido columna (dias hasta)
     let busqueda = dataTablaRango.find(el => diasPendientesPorDisfrutar <= el[3]);
-
-
     let rango = "SIN DATOS";
     let meta = "SIN DATOS";
-
     if (busqueda != undefined) {
         rango = busqueda[0];
         meta = busqueda[1];
     }
-
     //@return {[String,String]} rango: es el texto de la columna rango
     //@return {[String,String]} meta: es el texto de la columna meta
     return [rango, meta];
@@ -184,15 +176,12 @@ function obtenerCargoJefe(nombreJefe, dataMetricaSinFiltrar) {
     if (busqueda != undefined) {
         cargoJefe = busqueda[11];
     }
-
     //@return {String} cargoJefe: es el cargo del jefe
     return cargoJefe;
-
 }
 
-/*funcion para obtener los registros donde la columna H es menor o 
-igual a el mes de parametrizacion que esta en la tabla Parametrizacion B6*/
-function obtenerDataReporte8Antes() {
+/* funcion para obtener aquellos registros donde el año sea menor al de la parametrizacion y las fechas futuras*/
+function obtenerDataRegistrosReporte8AntesYDespues() {
     //desestructuracion para obtener parametros globales
     let { idDataBase, nameTables } = parametrosGlobales();
     let { idBaseDeDatosPasivoVacacional } = idDataBase;
@@ -219,7 +208,7 @@ function obtenerDataReporte8Antes() {
 
     dataReporte8ConFiltrosAplicados.map(el => {
         //fecha de inicio
-        // let fechaInicio = el[7];
+        // letfechaInicio = transformarFecha(el[7])
         let diaFechaInicio = el[7].getDate();
         let mesFechaInicio = el[7].getMonth() + 1;
         let anioFechaInicio = el[7].getFullYear();
@@ -229,11 +218,12 @@ function obtenerDataReporte8Antes() {
         let anioFechaFin = el[8].getFullYear();
         let diaFechaFin = el[8].getDate();
         console.log(el);
+        // console.log("FECHA DE INICIO EN DATE ->" + fechaInicio)
         console.log("FECHA DE INICIO->" + `${diaFechaInicio}---${mesFechaInicio}--${anioFechaInicio}`);
         console.log("FECHA DE FIN->" + `${diaFechaFin}---${mesFechaFin}--${anioFechaFin}`);
         //obtener registros vacaciones ya tenidas
         if (
-            (diaFechaInicio <= diaPatrametrizacion && mesFechaInicio <= mesParametrizacion && anioFechaInicio <= anioParametrizacion)
+            (anioFechaInicio <= anioParametrizacion)
             &&
             (diaFechaFin <= diaPatrametrizacion && mesFechaFin <= mesParametrizacion && anioFechaFin <= anioParametrizacion)
 
@@ -246,18 +236,13 @@ function obtenerDataReporte8Antes() {
         }
 
     });
-
     console.log("FILTRO 1 ANTES");
     console.log(arregloFiltro1Antes);
     console.log("FILTRO 2 DESPUES");
     console.log(arregloFiltro2Despues);
-
-
-}
-/*funcion para obtener los registros donde la columna H es mayor  
-a el mes de parametrizacion que esta en la tabla Parametrizacion B6*/
-function obtenerDataReporte8Despues() {
-
+    //@return {Array of Array} arregloFiltro1Antes: es la data de los registros menores de las vacaciones ya tenidas menor e igual al año de parametrizacion
+    //@return {Array of Array} arregloFiltro2Despues: es la data de los registros menores de las vacaciones ya tenidas 
+    return [arregloFiltro1Antes, arregloFiltro2Despues];
 }
 
 
