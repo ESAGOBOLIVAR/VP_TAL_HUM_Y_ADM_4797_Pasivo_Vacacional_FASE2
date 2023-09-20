@@ -7,7 +7,7 @@ function onOpen() {
         .addItem("Encontrar registros repetidos", 'encontrarRegistrosRepetidos')
         .addItem("Revisar Fecha Calculo Balance Reporte 10", 'revisarFechaCalculoBalanceYGenerarAlertaReporte10')
         .addItem("Encontrar Fecha Futura Reporte 8", 'menuEncontrarFechaFuturaReporte8')
-        .addItem("Cruzar Metrica Con Reporte 10", 'menuCruzarMetricaReporte10')
+        .addItem("Cruzar Metrica Con Reporte 10 y Reporte 8", 'menuCruzarMetricaReporte10YReporte8')
         .addItem("Generacion Hacia Historico", 'generacionDeHistorico')
         .addToUi();
 
@@ -50,9 +50,9 @@ function menuEncontrarFechaFuturaReporte8() {
 }
 
 
-function menuCruzarMetricaReporte10() {
-    cruzarMetricaConReporte10();
-    SpreadsheetApp.getUi().alert(`Se ha generado sobre la plantilla del reporte final el cruze de los datos entre metrica y reporte 10`);
+function menuCruzarMetricaReporte10YReporte8() {
+    cruzarMetricaConReporte10YReporte8();
+    SpreadsheetApp.getUi().alert(`Se ha generado sobre la plantilla del reporte final el cruze de los datos entre metrica y reporte 10 y reporte 8`);
 }
 
 function generacionDeHistorico() {

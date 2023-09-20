@@ -18,7 +18,7 @@
 
 # funcionalidad 6 funcionalidadEncontrarFechaFuturaReporte8 ✓
 
-# funcionalidad 7 cruzarMetricaConReporte10
+# funcionalidad 7 cruzarMetricaConReporte10YReporte8
 
 # funcionalidad 8 generarHistorico
 

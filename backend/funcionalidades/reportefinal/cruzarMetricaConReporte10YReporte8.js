@@ -1,4 +1,5 @@
-function cruzarMetricaConReporte10() {
+//funcion para cruzar metrica con reporte 10 y reporte 8
+function cruzarMetricaConReporte10YReporte8() {
     //desestructuracion para obtener parametros globales
     let { idDataBase, nameTables } = parametrosGlobales();
     let { idBaseDeDatosPasivoVacacional } = idDataBase;
@@ -85,13 +86,18 @@ function cruzarMetricaConReporte10() {
 
             let cargoJefe = obtenerCargoJefe(nombreJefeInmediato, dataTablaMetricaSinAplicarFiltros);
 
+            //obtener registros donde se cumple el antes y despues
+            let [arregloFiltro1Antes, arregloFiltro2Despues] = obtenerDataRegistrosReporte8AntesYDespues();
             //buscar el id en el reporte 8 de los datos del antes para obtener total dias disfrutados
+            let diasDisfrutados = buscarDiasDuracionPersona(idMetrica, arregloFiltro1Antes);
+            let diasProgramados = buscarDiasDuracionPersona(idMetrica, arregloFiltro2Despues);
 
+            let totalDiasDisfrutadosMasProgramados = diasDisfrutados + diasProgramados;
             //buscar el id en el reporte 8 de los datos del antes para obtener total dias pendientes
 
 
 
-            let arregloRegistro = [idMetrica, nombre, cargoFuncionario, nombreJefeInmediato, cargoJefe, correoCorporativoJefe, gerencia, vicepresidencia, pipolParther, bissnetPartner, diasPendientesPorDisfrutar, , , , rango, meta, pendientesMeta];
+            let arregloRegistro = [idMetrica, nombre, cargoFuncionario, nombreJefeInmediato, cargoJefe, correoCorporativoJefe, gerencia, vicepresidencia, pipolParther, bissnetPartner, diasPendientesPorDisfrutar, diasDisfrutados, diasProgramados, totalDiasDisfrutadosMasProgramados, rango, meta, pendientesMeta];
 
             console.log("--------REGISTRO-------------");
             console.log(arregloRegistro);
@@ -243,6 +249,31 @@ function obtenerDataRegistrosReporte8AntesYDespues() {
     //@return {Array of Array} arregloFiltro1Antes: es la data de los registros menores de las vacaciones ya tenidas menor e igual al año de parametrizacion
     //@return {Array of Array} arregloFiltro2Despues: es la data de los registros menores de las vacaciones ya tenidas 
     return [arregloFiltro1Antes, arregloFiltro2Despues];
+}
+
+//funcion para obtener los dias disfrutados de la persona y tambien sirve para obtener los dias pendientes
+//@param {String} id: es el id de la persona a buscar
+//@param {String} id: es el id de la persona a buscar
+//@arreglo {Array of Array} arreglo: es el arreglo de arreglos recibos de los datos ya sean del antes o despues
+function buscarDiasDuracionPersona(id, arreglo) {
+
+    let idRecibido = id.toString().trim();
+
+    let suma = 0;
+
+    arreglo.map(el => {
+        let nroIdentificacioNacional = el[3].toString().trim();
+        let duracion = el[9];
+        //si encuentra a la persona lo va a sumar
+        if (nroIdentificacioNacional == idRecibido) {
+            //sumar la duraccion de los dias disfrutados por persona
+            suma = suma + duracion;
+        }
+
+    });
+    //@retun {Int} suma:es la suma de la duracion, en caso que la persona no exista retorna un cero
+    return suma;
+
 }
 
 
