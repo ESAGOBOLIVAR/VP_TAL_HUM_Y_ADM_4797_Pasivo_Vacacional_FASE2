@@ -2,11 +2,17 @@ function cruzarMetricaConReporte10() {
     //desestructuracion para obtener parametros globales
     let { idDataBase, nameTables } = parametrosGlobales();
     let { idBaseDeDatosPasivoVacacional } = idDataBase;
-    let { tablaBasesConFiltrosAplicados, tablaPipolParther, tablaBissnetPartner, tablaRango, tablaParametrizacion, tablaJefe } = nameTables;
+    let { tablaBasesConFiltrosAplicados, tablaPipolParther, tablaBissnetPartner, tablaRango, tablaParametrizacion, tablaBasesSinAplicarFiltros } = nameTables;
 
 
     const [sheetHojaTablaParametrizacion] = asignarNombreHojaDeCalculo(tablaParametrizacion, idBaseDeDatosPasivoVacacional);
     const reporteGeneral = sheetHojaTablaParametrizacion.getRange("B1").getValue();
+
+
+    const [sheetHojaTablaBasesSinAplicarFiltros] = asignarNombreHojaDeCalculo(tablaBasesSinAplicarFiltros, idBaseDeDatosPasivoVacacional);
+    const urlMetricaSinFiltrar = sheetHojaTablaBasesSinAplicarFiltros.getRange("B2").getValue();
+    //data de la tabla metrica sin aplicar los filtros
+    const dataTablaMetricaSinAplicarFiltros = readAllByUrl(urlMetricaSinFiltrar);
 
     //se obtiene la data de la base con filtros aplicados
     let dataTablaBasesConFiltrosAplicados = readAllArray([tablaBasesConFiltrosAplicados, idBaseDeDatosPasivoVacacional]);
@@ -75,7 +81,10 @@ function cruzarMetricaConReporte10() {
             //obtener valor de pendientes meta.
             let pendientesMeta = diasPendientesPorDisfrutar - meta;
 
-            let arregloRegistro = [idMetrica, nombre, cargoFuncionario, nombreJefeInmediato, "CARGO JEFE", correoCorporativoJefe, gerencia, vicepresidencia, pipolParther, bissnetPartner, diasPendientesPorDisfrutar, , , , rango, meta, pendientesMeta];
+            //en base al nombre del jefe inmediato proceder a buscar en la metrica no limpia para obtener el cargo de este
+
+            let cargoJefe = obtenerCargoJefe(nombreJefeInmediato, dataTablaMetricaSinAplicarFiltros)
+            let arregloRegistro = [idMetrica, nombre, cargoFuncionario, nombreJefeInmediato, cargoJefe, correoCorporativoJefe, gerencia, vicepresidencia, pipolParther, bissnetPartner, diasPendientesPorDisfrutar, , , , rango, meta, pendientesMeta];
 
             console.log("--------REGISTRO-------------");
             console.log(arregloRegistro);
@@ -162,19 +171,94 @@ function obtenerRango(diasPendientesPorDisfrutar, dataTablaRango) {
 
 }
 
-//funcion para obtener el cargo del jefe en base al correo corporativo
-//@param {String} correo_corporativo: es el correo corporativo del jefe
-//@param {Array of Array} dataTablaRango: es el arreglo de arreglo de los registros de la tabla Jefe
-// function obtenerCargoJefe(correo_corporativo, dataTablaJefe) {
+//@param {String} nombreJefe: es el nombre del jefe
+//@param {Array of array} dataMetricaSinFiltrar: es el arreglo de arreglo de los registros de la metrica sin filtrar
+function obtenerCargoJefe(nombreJefe, dataMetricaSinFiltrar) {
+    console.log("NOMBRE JEFE INMEDIATO" + nombreJefe)
+    console.log("METRICA SIN FILTRAR");
+    console.log(dataMetricaSinFiltrar);
 
-//     let cargoJefe = "SIN CARGO DE JEFE , CORREO CORPORATIVO NO ESTA EN LA TABLA JEFE";
-//     let busqueda = dataTablaJefe.find(el => correo_corporativo.toUpperCase().trim() == el[0].toString().toUpperCase().trim());
-//     if (busqueda != undefined) {
-//         cargoJefe = busqueda[1];
-//     }
-//     //@return {String} cargoJefe: es el cargo del jefe
-//     return [cargoJefe];
-// }
+    let busqueda = dataMetricaSinFiltrar.find(el => el[5].toString().trim().toUpperCase() == nombreJefe.toString().trim().toUpperCase());
+
+    let cargoJefe = "CARGO DE JEFE NO ENCONTRADO"
+    if (busqueda != undefined) {
+        cargoJefe = busqueda[11];
+    }
+
+    //@return {String} cargoJefe: es el cargo del jefe
+    return cargoJefe;
+
+}
+
+/*funcion para obtener los registros donde la columna H es menor o 
+igual a el mes de parametrizacion que esta en la tabla Parametrizacion B6*/
+function obtenerDataReporte8Antes() {
+    //desestructuracion para obtener parametros globales
+    let { idDataBase, nameTables } = parametrosGlobales();
+    let { idBaseDeDatosPasivoVacacional } = idDataBase;
+    let { tablaBasesConFiltrosAplicados, tablaParametrizacion } = nameTables;
+
+    //obtener la hoja de calculo y asignar el nombre de la hoja de calculo
+    const [sheetHojaParametrizacion] = asignarNombreHojaDeCalculo(tablaParametrizacion, idBaseDeDatosPasivoVacacional);
+
+    const [sheetHojaBasesConFiltrosAplicados] = asignarNombreHojaDeCalculo(tablaBasesConFiltrosAplicados, idBaseDeDatosPasivoVacacional);
+    let diaPatrametrizacion = sheetHojaParametrizacion.getRange("B9").getValue();
+    let mesParametrizacion = sheetHojaParametrizacion.getRange("B10").getValue();
+    let anioParametrizacion = sheetHojaParametrizacion.getRange("B11").getValue();
+    let urlReporteVacaciones8BaseConFiltrosAplicados = sheetHojaBasesConFiltrosAplicados.getRange("B4").getValue();
+
+    console.log("DIA->" + diaPatrametrizacion);
+    console.log("MES ->" + mesParametrizacion);
+    console.log("AÑO->" + anioParametrizacion);
+    console.log("URL RP8 ->" + urlReporteVacaciones8BaseConFiltrosAplicados);
+
+    let dataReporte8ConFiltrosAplicados = readAllByUrl(urlReporteVacaciones8BaseConFiltrosAplicados);
+
+    let arregloFiltro1Antes = [];
+    let arregloFiltro2Despues = [];
+
+    dataReporte8ConFiltrosAplicados.map(el => {
+        //fecha de inicio
+        // let fechaInicio = el[7];
+        let diaFechaInicio = el[7].getDate();
+        let mesFechaInicio = el[7].getMonth() + 1;
+        let anioFechaInicio = el[7].getFullYear();
+        //fecha fin
+        // let fechaFin = el[8];
+        let mesFechaFin = el[8].getMonth() + 1;
+        let anioFechaFin = el[8].getFullYear();
+        let diaFechaFin = el[8].getDate();
+        console.log(el);
+        console.log("FECHA DE INICIO->" + `${diaFechaInicio}---${mesFechaInicio}--${anioFechaInicio}`);
+        console.log("FECHA DE FIN->" + `${diaFechaFin}---${mesFechaFin}--${anioFechaFin}`);
+        //obtener registros vacaciones ya tenidas
+        if (
+            (diaFechaInicio <= diaPatrametrizacion && mesFechaInicio <= mesParametrizacion && anioFechaInicio <= anioParametrizacion)
+            &&
+            (diaFechaFin <= diaPatrametrizacion && mesFechaFin <= mesParametrizacion && anioFechaFin <= anioParametrizacion)
+
+        ) {
+            //se agregan los registros menores o igual a dicha fecha
+            arregloFiltro1Antes.push(el);
+        } else { //obtener vacaciones pendientes
+            //se agregan los registros despues de esa fecha
+            arregloFiltro2Despues.push(el);
+        }
+
+    });
+
+    console.log("FILTRO 1 ANTES");
+    console.log(arregloFiltro1Antes);
+    console.log("FILTRO 2 DESPUES");
+    console.log(arregloFiltro2Despues);
+
+
+}
+/*funcion para obtener los registros donde la columna H es mayor  
+a el mes de parametrizacion que esta en la tabla Parametrizacion B6*/
+function obtenerDataReporte8Despues() {
+
+}
 
 
 
