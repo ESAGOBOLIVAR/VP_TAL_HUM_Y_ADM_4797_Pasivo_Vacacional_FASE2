@@ -54,6 +54,8 @@ function funcionalidadEncontrarFechaFuturaReporte8() {
                     //entonces colocar en color rojo ese registro
                     let rango = sheetHoja.getRange(`A${indice}:K${indice}`);
 
+                    let rangoEstadoEsago=sheetHoja.getRange(`L${indice}`).setValue("no es fecha futura");
+
                     // Cambia el color de fondo de la fila a naranja
                     rango.setBackground("#FFA500"); // En este caso, el color es rojo
 

@@ -5,6 +5,10 @@ function onOpen() {
         .addItem('Generar Plantillas', 'generarCopiasDePlantillas')
         .addItem('Generar Metrica, Reporte 10 y Reporte 8 Filtrados', 'obtenerDatosFiltradosMetricaReporte10YReporte8')
         .addItem("Encontrar registros repetidos", 'encontrarRegistrosRepetidos')
+        .addItem("Verificar registros que estan reporte 10 y no estan en la metrica", 'registrosExisteEnMetricaPeroNoExisteEnReporte10')
+
+
+
         .addItem("Revisar Fecha Calculo Balance Reporte 10", 'revisarFechaCalculoBalanceYGenerarAlertaReporte10')
         .addItem("Encontrar Fecha Futura Reporte 8", 'menuEncontrarFechaFuturaReporte8')
         .addItem("Cruzar Metrica Con Reporte 10 y Reporte 8", 'menuCruzarMetricaReporte10YReporte8')
@@ -24,6 +28,14 @@ function obtenerDatosFiltradosMetricaReporte10YReporte8() {
     funcionalidadGenerarReporte_8_ObtenerDatosFiltrados();
 
     SpreadsheetApp.getUi().alert(`Se han generado los reportes de Metrica, Reporte 10 y Reporte 8 Filtrados`);
+}
+
+//funcion para verificar los registros que existen en metrica pero no estan en el reporte 10, se identifica aquellos que estan en el reporte 10 y no estan en metrica
+function registrosExisteEnMetricaPeroNoExisteEnReporte10() {
+    funcionalidadIdentificarPersonasQueEstanEnMetricaYNoEstanEnReporte10();
+
+    SpreadsheetApp.getUi().alert(`Se ha verificado los registros de la métrica sobre el reporte 10, aquellos registros que existen en el reporte 10, pero no existen en la métrica, se han marcado sobre el reporte 10 en un color naranja`);
+
 }
 
 function encontrarRegistrosRepetidos() {
@@ -66,20 +78,3 @@ function menuEnviarReporte() {
     SpreadsheetApp.getUi().alert(`Se han enviado los reportes marcados en la Vicepresidencia`);
 
 }
-
-
-
-//revisar fecha calculo de balance reporte 10
-//reporte 10 generacion de alerta
-//funcionalidadRevisarFechaBalance
-//texto: Revisar Fecha Balance Reporte 10
-//texto: Se ha revisado la fecha balance del reporte 10 
-
-
-function opcion2() {
-    // Coloca aquí el código que deseas ejecutar cuando se selecciona la Opción 2
-    SpreadsheetApp.getUi().alert('Has seleccionado la Opción 2');
-}
-
-
-

@@ -44,9 +44,9 @@ function funcionalidadGenerarReporte10ObtenerDatosFiltrados() {
             let urlBaseConFiltrosAplicados = dataTablaBasesConFiltrosAplicados[1][1];
 
             filtro.map(el => {
-                let registro=el;
-                let saldo = parseInt(el[8]);
-                registro[8]=saldo;
+                let registro = el;
+                let saldo = typeof (el[8]) != "string" ? parseInt(el[8]) : el[8];
+                registro[8] = saldo;
             });
 
             console.log("FILTRO LIMPIO");

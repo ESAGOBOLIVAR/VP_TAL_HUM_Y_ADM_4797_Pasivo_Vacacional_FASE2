@@ -59,6 +59,10 @@ function funcionalidadEncontrarRepetidosMetrica() {
 
                 let rango = hojaActiva.getRange(`A${filaIndice}:M${filaIndice}`);
 
+                //para colocar el estado de repetido
+                let rangoEstadoEsago = hojaActiva.getRange(`N${filaIndice}`);
+                rangoEstadoEsago.setValue("repetido");
+
                 // Cambia el color de fondo de la fila a rojo
                 rango.setBackground("#FF0000"); // En este caso, el color es rojo
             })

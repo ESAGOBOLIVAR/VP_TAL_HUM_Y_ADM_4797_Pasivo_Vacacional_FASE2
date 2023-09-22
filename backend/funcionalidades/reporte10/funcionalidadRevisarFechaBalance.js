@@ -70,6 +70,8 @@ function funcionalidadRevisarFechaBalance() {
                     console.log(indice)
                     //entonces colocar en color rojo ese registro
                     let rango = sheetHoja.getRange(`A${indice}:I${indice}`);
+                    let rangoEstadoEsago = sheetHoja.getRange(`J${indice}`).setValue("plan esta vacio diferencia de dias mayor a 31 dias");
+
 
                     // Cambia el color de fondo de la fila a amarillo
                     rango.setBackground("#FFFF00"); // En este caso, el color es rojo
@@ -87,6 +89,7 @@ function funcionalidadRevisarFechaBalance() {
 //@param {Object} fila: es el indice de la fila actuallizar
 function actualizarSaldoEnDiasEnCero(sheetHoja, fila, columna) {
     let rango = sheetHoja.getRange(fila, columna).setValue("0");
+    let rangoEstado= sheetHoja.getRange(`J${fila}`).setValue("saldo actualizado en cero, plan esta vacio diferencia de dias menor o igual a 30 dias");
 }
 
 

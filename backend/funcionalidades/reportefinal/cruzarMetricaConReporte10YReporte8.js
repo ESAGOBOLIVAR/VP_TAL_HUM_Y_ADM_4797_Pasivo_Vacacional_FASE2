@@ -42,6 +42,20 @@ function cruzarMetricaConReporte10YReporte8() {
         let datosTablaReporte10Filtrado = readAllByUrl(urlSheetReporte10Filtrado);
 
 
+        // -------------------------------------//
+        //obtener la hoja de calculo y asignar el nombre de la hoja de calculo
+        const [sheetHojaParametrizacion] = asignarNombreHojaDeCalculo(tablaParametrizacion, idBaseDeDatosPasivoVacacional);
+
+        const [sheetHojaBasesConFiltrosAplicados] = asignarNombreHojaDeCalculo(tablaBasesConFiltrosAplicados, idBaseDeDatosPasivoVacacional);
+        let diaPatrametrizacion = sheetHojaParametrizacion.getRange("B9").getValue();
+        let mesParametrizacion = sheetHojaParametrizacion.getRange("B10").getValue();
+        let anioParametrizacion = sheetHojaParametrizacion.getRange("B11").getValue();
+        let urlReporteVacaciones8BaseConFiltrosAplicados = sheetHojaBasesConFiltrosAplicados.getRange("B4").getValue();
+        let dataReporte8ConFiltrosAplicados = readAllByUrl(urlReporteVacaciones8BaseConFiltrosAplicados);
+
+        //obtener registros donde se cumple el antes y despues
+        let [arregloFiltro1Antes, arregloFiltro2Despues] = obtenerDataRegistrosReporte8AntesYDespues(diaPatrametrizacion, mesParametrizacion, anioParametrizacion, dataReporte8ConFiltrosAplicados);
+        // -------------------------------------- //
 
         //recorrer registro de la tabla Metrica
         datosTablaMetrica.map(elementoRegistroMetrica => {
@@ -86,8 +100,7 @@ function cruzarMetricaConReporte10YReporte8() {
 
             let cargoJefe = obtenerCargoJefe(nombreJefeInmediato, dataTablaMetricaSinAplicarFiltros);
 
-            //obtener registros donde se cumple el antes y despues
-            let [arregloFiltro1Antes, arregloFiltro2Despues] = obtenerDataRegistrosReporte8AntesYDespues();
+
             //buscar el id en el reporte 8 de los datos del antes para obtener total dias disfrutados
             let diasDisfrutados = buscarDiasDuracionPersona(idMetrica, arregloFiltro1Antes);
             let diasProgramados = buscarDiasDuracionPersona(idMetrica, arregloFiltro2Despues);
@@ -165,8 +178,6 @@ function obtenerRango(diasPendientesPorDisfrutar, dataTablaRango) {
     //@return {[String,String]} rango: es el texto de la columna rango
     //@return {[String,String]} meta: es el texto de la columna meta
     return [rango, meta];
-
-
 }
 
 //@param {String} nombreJefe: es el nombre del jefe
@@ -187,27 +198,13 @@ function obtenerCargoJefe(nombreJefe, dataMetricaSinFiltrar) {
 }
 
 /* funcion para obtener aquellos registros donde el año sea menor al de la parametrizacion y las fechas futuras*/
-function obtenerDataRegistrosReporte8AntesYDespues() {
-    //desestructuracion para obtener parametros globales
-    let { idDataBase, nameTables } = parametrosGlobales();
-    let { idBaseDeDatosPasivoVacacional } = idDataBase;
-    let { tablaBasesConFiltrosAplicados, tablaParametrizacion } = nameTables;
+function obtenerDataRegistrosReporte8AntesYDespues(diaPatrametrizacion, mesParametrizacion, anioParametrizacion, dataReporte8ConFiltrosAplicados) {
 
-    //obtener la hoja de calculo y asignar el nombre de la hoja de calculo
-    const [sheetHojaParametrizacion] = asignarNombreHojaDeCalculo(tablaParametrizacion, idBaseDeDatosPasivoVacacional);
+    // console.log("DIA->" + diaPatrametrizacion);
+    // console.log("MES ->" + mesParametrizacion);
+    // console.log("AÑO->" + anioParametrizacion);
+    // console.log("URL RP8 ->" + urlReporteVacaciones8BaseConFiltrosAplicados);
 
-    const [sheetHojaBasesConFiltrosAplicados] = asignarNombreHojaDeCalculo(tablaBasesConFiltrosAplicados, idBaseDeDatosPasivoVacacional);
-    let diaPatrametrizacion = sheetHojaParametrizacion.getRange("B9").getValue();
-    let mesParametrizacion = sheetHojaParametrizacion.getRange("B10").getValue();
-    let anioParametrizacion = sheetHojaParametrizacion.getRange("B11").getValue();
-    let urlReporteVacaciones8BaseConFiltrosAplicados = sheetHojaBasesConFiltrosAplicados.getRange("B4").getValue();
-
-    console.log("DIA->" + diaPatrametrizacion);
-    console.log("MES ->" + mesParametrizacion);
-    console.log("AÑO->" + anioParametrizacion);
-    console.log("URL RP8 ->" + urlReporteVacaciones8BaseConFiltrosAplicados);
-
-    let dataReporte8ConFiltrosAplicados = readAllByUrl(urlReporteVacaciones8BaseConFiltrosAplicados);
 
     let arregloFiltro1Antes = [];
     let arregloFiltro2Despues = [];

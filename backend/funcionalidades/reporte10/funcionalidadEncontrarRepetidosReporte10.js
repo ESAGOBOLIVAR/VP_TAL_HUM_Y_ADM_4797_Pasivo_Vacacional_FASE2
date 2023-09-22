@@ -58,6 +58,11 @@ function funcionalidadEncontrarRepetidosReporte10() {
 
                 let rango = hojaActiva.getRange(`A${filaIndice}:I${filaIndice}`);
 
+
+                //para colocar el estado de repetido
+                let rangoEstadoEsago = hojaActiva.getRange(`J${filaIndice}`);
+                rangoEstadoEsago.setValue("repetido");
+
                 // Cambia el color de fondo de la fila a rojo
                 rango.setBackground("#FF0000"); // En este caso, el color es rojo
             })

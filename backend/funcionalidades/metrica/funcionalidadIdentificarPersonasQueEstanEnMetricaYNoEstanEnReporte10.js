@@ -42,6 +42,10 @@ function funcionalidadIdentificarPersonasQueEstanEnMetricaYNoEstanEnReporte10() 
                 //entonces colocar en color rojo ese registro
                 let rango = sheetHoja.getRange(`A${indice}:I${indice}`);
 
+                let rangoEstadoEsago=sheetHoja.getRange(`J${indice}`);
+
+                rangoEstadoEsago.setValue('el registro existe en reporte 10 y no en metrica');
+
                 // Cambia el color de fondo de la fila a naranja
                 rango.setBackground("#FFA500"); // En este caso, el color es rojo
             }
