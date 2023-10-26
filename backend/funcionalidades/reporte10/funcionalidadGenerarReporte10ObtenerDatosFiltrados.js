@@ -45,7 +45,7 @@ function funcionalidadGenerarReporte10ObtenerDatosFiltrados() {
 
             filtro.map(el => {
                 let registro = el;
-                let saldo = typeof (el[8]) != "string" ? parseInt(el[8]) : el[8];
+                let saldo = typeof(el[8]) != "string" ? parseInt(el[8]) : el[8];
                 registro[8] = saldo;
             });
 

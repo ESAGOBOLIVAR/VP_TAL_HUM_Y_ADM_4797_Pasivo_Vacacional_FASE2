@@ -26,7 +26,7 @@ function funcionalidadGenerarMetricaObtenerDatosFiltrados() {
         console.log(data);
 
         //recorrer la data para obtener Solo relacionar, Tipo de contrato a término fijo e indefinido Columna J
-        // No tener en cuenta lo que sea Fundacion Cultiva El Arte Y La Cultura es decir omitir esto Columna A
+        // No tener en cuenta lo que sea CULTIVARTE es decir omitir esto Columna A
 
         let tipo1 = "TERMINO FIJO".trim().toUpperCase();
         let tipo2 = "TERMINO INDEFINIDO".trim().toUpperCase();

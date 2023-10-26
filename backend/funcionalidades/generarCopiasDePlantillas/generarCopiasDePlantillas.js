@@ -30,6 +30,9 @@ function generarCopiasDePlantillas() {
         console.log("URLS FINALES");
         console.log(arregloUrls);
         //asignar valores a ese rango
+        //funcion de revision de uso
+        revisarUso([idBaseDeDatosPasivoVacacional], "VIC_TAL_HUM_Y_ADM_ESA_GOO_1012", "Fase 2 de pasivo vacacional");
+
 
         //colocar valores en la hoja de calculo
         arregloUrls.map((registro, index) => {
