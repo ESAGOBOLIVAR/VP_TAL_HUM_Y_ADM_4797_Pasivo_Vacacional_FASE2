@@ -28,54 +28,83 @@ function funcionalidadRevisarFechaBalance() {
         datosTabla.map((el, index) => {
             let fechaInicioRelacionLaboral = el[5];
             let fechaCalculoBalance = el[7];
-
             let planAsociado = el[6];
-            // Calcula la diferencia en milisegundos
-            let diferenciaMilisegundos = fechaCalculoBalance - fechaInicioRelacionLaboral;
 
-            // Convierte la diferencia en días
-            let diferenciaDias = diferenciaMilisegundos / (1000 * 3600 * 24);
+            //agregado el 26 de octubre del 2023 mauricio.araujo@servinformacion.com
+            /* se agrega plan vacio para validar si este esta vacio, en caso que entre en alguno de los condicionales
+            de de fecha de calculo balance se pasara a true, en caso que se mantenga false, entonces actualizaria
+            el campo a plan vacio*/
+            let planVacio = true;
 
-            let indice = index + 2;
+            //si hay una fecha de inicio de relacion laboral y hay una fecha de calculo balance
+            if (fechaInicioRelacionLaboral && fechaCalculoBalance) {
+                // Calcula la diferencia en milisegundos
+                let diferenciaMilisegundos = fechaCalculoBalance - fechaInicioRelacionLaboral;
+
+                // Convierte la diferencia en días
+                let diferenciaDias = diferenciaMilisegundos / (1000 * 3600 * 24);
+
+                let indice = index + 2;
 
 
-            if ((diferenciaDias >= 0 && diferenciaDias <= 30)) {
-                console.log("Menor o igual a  30 días");
-                console.log("DIFERENCIA DE DIAS");
-                console.log(diferenciaDias);
-                console.log(el);
-                //verificar plan asociado si esta vacio
-                if (!planAsociado) {
-                    let columna = 9;
-                    console.log("Registro vacio a actualizar columna i saldo en dias");
+
+                if ((diferenciaDias >= 0 && diferenciaDias <= 30)) {
+                    console.log("Menor o igual a  30 días");
+                    console.log("DIFERENCIA DE DIAS");
+                    console.log(diferenciaDias);
                     console.log(el);
-                    console.log("INDICE ACTUALIZAR EN CERO");
-                    console.log(indice)
-                    //actualizar columna i saldo en dias en un valor de cero
-                    actualizarSaldoEnDiasEnCero(sheetHoja, indice, columna)
+                    //verificar plan asociado si esta vacio
+                    if (!planAsociado) {
+                        let columna = 9;
+                        console.log("Registro vacio a actualizar columna i saldo en dias");
+                        console.log(el);
+                        console.log("INDICE ACTUALIZAR EN CERO");
+                        console.log(indice)
+                        //actualizar columna i saldo en dias en un valor de cero
+                        actualizarSaldoEnDiasEnCero(sheetHoja, indice, columna);
 
-                }
-            }//si los dias son mayor o iguales a 31
-            else if ((diferenciaDias >= 31)) {
-                console.log("Mayor a 30 dias");
-                console.log("DIFERENCIA DE DIAS");
-                console.log(diferenciaDias);
-                console.log(el);
-                //si es mayor a 31 dias verificar si la columna planAsociado esta vacia
-                // y si esta vacia entonces colocar ese registro en amarillo
-                if (!planAsociado) {
-                    console.log("Registro vacio superior a 30 dias es decir 31 en adelante");
+                        planVacio = false;
+
+                    }
+                }//si los dias son mayor o iguales a 31
+                else if ((diferenciaDias >= 31)) {
+                    console.log("Mayor a 30 dias");
+                    console.log("DIFERENCIA DE DIAS");
+                    console.log(diferenciaDias);
                     console.log(el);
-                    console.log("INDICE ACTUALIZAR CAMBIAR COLOR REGISTRO");
-                    console.log(indice)
-                    //entonces colocar en color rojo ese registro
-                    let rango = sheetHoja.getRange(`A${indice}:I${indice}`);
-                    let rangoEstadoEsago = sheetHoja.getRange(`J${indice}`).setValue("plan esta vacio diferencia de dias mayor a 31 dias");
+                    //si es mayor a 31 dias verificar si la columna planAsociado esta vacia
+                    // y si esta vacia entonces colocar ese registro en amarillo
+                    if (!planAsociado) {
+                        console.log("Registro vacio superior a 30 dias es decir 31 en adelante");
+                        console.log(el);
+                        console.log("INDICE ACTUALIZAR CAMBIAR COLOR REGISTRO");
+                        console.log(indice)
+                        //entonces colocar en color rojo ese registro
+                        let rango = sheetHoja.getRange(`A${indice}:I${indice}`);
+                        let rangoEstadoEsago = sheetHoja.getRange(`J${indice}`).setValue("plan esta vacio diferencia de dias mayor a 31 dias");
 
 
-                    // Cambia el color de fondo de la fila a amarillo
-                    rango.setBackground("#FFFF00"); // En este caso, el color es rojo
+                        // Cambia el color de fondo de la fila a amarillo
+                        rango.setBackground("#FFFF00");
+                        planVacio = false;
+                    }
                 }
+            }
+
+
+            //26/10/2029
+            /* si el plan asociado esta vacio y planVacio es igua la true entonces actualizar*/
+            // y si esta vacia entonces colocar ese registro en amarillo
+            if (!planAsociado && planVacio) {
+                let indice = index + 2;
+                let rango = sheetHoja.getRange(`A${indice}:I${indice}`);
+                let rangoEstadoEsago = sheetHoja.getRange(`J${indice}`).setValue("plan vacio");
+
+                // Cambia el color de fondo de la fila a amarillo
+                rango.setBackground("#FFFF00");
+
+                console.log("PLAN VACIO INDICE--->" + indice)
+
             }
 
 
@@ -89,7 +118,7 @@ function funcionalidadRevisarFechaBalance() {
 //@param {Object} fila: es el indice de la fila actuallizar
 function actualizarSaldoEnDiasEnCero(sheetHoja, fila, columna) {
     let rango = sheetHoja.getRange(fila, columna).setValue("0");
-    let rangoEstado= sheetHoja.getRange(`J${fila}`).setValue("saldo actualizado en cero, plan esta vacio diferencia de dias menor o igual a 30 dias");
+    let rangoEstado = sheetHoja.getRange(`J${fila}`).setValue("saldo actualizado en cero, plan esta vacio diferencia de dias menor o igual a 30 dias");
 }
 
 
