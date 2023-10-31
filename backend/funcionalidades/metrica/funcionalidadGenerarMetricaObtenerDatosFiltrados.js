@@ -28,11 +28,12 @@ function funcionalidadGenerarMetricaObtenerDatosFiltrados() {
         //recorrer la data para obtener Solo relacionar, Tipo de contrato a término fijo e indefinido Columna J
         // No tener en cuenta lo que sea CULTIVARTE es decir omitir esto Columna A
 
-        let tipo1 = "TERMINO FIJO".trim().toUpperCase();
-        let tipo2 = "TERMINO INDEFINIDO".trim().toUpperCase();
+        let tipo1 = "Fijo".trim().toUpperCase();
+        let tipo2 = "Indefinido".trim().toUpperCase();
         let companiaOmitir = "Fundacion Cultiva El Arte Y La Cultura".trim().toUpperCase();
 
-        let filtro = data.filter(el => (el[0].toString().trim().toUpperCase() != companiaOmitir && (el[0].toString().trim().toUpperCase() == tipo1 || tipo2)))
+        let filtro = data.filter(el => (el[0].toString().trim().toUpperCase() != companiaOmitir && (el[9].toString().trim().toUpperCase() == tipo1 || el[9].toString().trim().toUpperCase()==tipo2)))
+        // let filtro = data.filter(el => (el[0].toString().trim().toUpperCase() != companiaOmitir)));
 
 
 

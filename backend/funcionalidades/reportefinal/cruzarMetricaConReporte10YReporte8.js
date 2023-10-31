@@ -126,11 +126,19 @@ function cruzarMetricaConReporte10YReporte8() {
 
 
             // 25 de octubre del 2023  se cambia la resta por mauricio.araujo@servinformacion para restar la meta menos los dias programados
-            let pendientesMeta = `${meta - diasProgramados}`;
+            // let pendientesMeta = `${meta - diasProgramados}`;
             //fin actualizacion 25 de octubre del 2023 
 
             let totalDiasDisfrutadosMasProgramados = diasDisfrutados + diasProgramados;
             //buscar el id en el reporte 8 de los datos del antes para obtener total dias pendientes
+            //31 de octubre del 2023
+            let pendientesMeta = `${meta - totalDiasDisfrutadosMasProgramados}`;
+
+            //31 de octubre si pendientes meta es menor o igual a cero igualar pendientes meta a cero
+            if (pendientesMeta < 0) {
+                pendientesMeta = 0;
+            }
+
 
             let arregloRegistro = [idMetrica, nombre, cargoFuncionario, nombreJefeInmediato, cargoJefe, correoCorporativoJefe, gerencia, vicepresidencia, pipolParther, bissnetPartner, diasPendientesPorDisfrutar, diasDisfrutados, diasProgramados, totalDiasDisfrutadosMasProgramados, rango, meta, pendientesMeta];
 

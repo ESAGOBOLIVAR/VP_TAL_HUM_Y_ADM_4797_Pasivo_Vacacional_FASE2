@@ -47,7 +47,7 @@ function funcionalidadEncontrarFechaFuturaReporte8() {
                 console.log("MES REGISTRO");
                 console.log(fechaInicio);
                 //si el mes de fecha de inicio columna H es mayor al mes de parametrizacion
-                if (fechaInicio < mesParametrizacion) {
+                if (fechaInicio <= mesParametrizacion) {
                     //colocar el registro en color naranja
 
                     let indice = index + 2;
